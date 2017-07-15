@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
+
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
 
 export default class Main extends Component {
   state = {
@@ -24,6 +27,10 @@ export default class Main extends Component {
           <MenuItem value={4} primaryText="Korean" />
           <MenuItem value={5} primaryText="Arabic" />
         </SelectField>
+        <br />
+        <Link to='ask' >
+          <RaisedButton label="Submit" primary={true} />
+        </Link>
       </div>
     )
   }
