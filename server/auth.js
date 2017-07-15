@@ -33,42 +33,42 @@ const auth = require('express').Router()
 
 // Facebook needs the FACEBOOK_CLIENT_ID and FACEBOOK_CLIENT_SECRET
 // environment variables.
-OAuth.setupStrategy({
-  provider: 'facebook',
-  strategy: require('passport-facebook').Strategy,
-  config: {
-    clientID: env.FACEBOOK_CLIENT_ID,
-    clientSecret: env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: `${app.baseUrl}/api/auth/login/facebook`,
-  },
-  passport
-})
-
-// Google needs the GOOGLE_CLIENT_SECRET AND GOOGLE_CLIENT_ID
-// environment variables.
-OAuth.setupStrategy({
-  provider: 'google',
-  strategy: require('passport-google-oauth').OAuth2Strategy,
-  config: {
-    clientID: env.GOOGLE_CLIENT_ID,
-    clientSecret: env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${app.baseUrl}/api/auth/login/google`,
-  },
-  passport
-})
+// OAuth.setupStrategy({
+//   provider: 'facebook',
+//   strategy: require('passport-facebook').Strategy,
+//   config: {
+//     clientID: env.FACEBOOK_CLIENT_ID,
+//     clientSecret: env.FACEBOOK_CLIENT_SECRET,
+//     callbackURL: `${app.baseUrl}/api/auth/login/facebook`,
+//   },
+//   passport
+// })
+//
+// // Google needs the GOOGLE_CLIENT_SECRET AND GOOGLE_CLIENT_ID
+// // environment variables.
+// OAuth.setupStrategy({
+//   provider: 'google',
+//   strategy: require('passport-google-oauth').OAuth2Strategy,
+//   config: {
+//     clientID: env.GOOGLE_CLIENT_ID,
+//     clientSecret: env.GOOGLE_CLIENT_SECRET,
+//     callbackURL: `${app.baseUrl}/api/auth/login/google`,
+//   },
+//   passport
+// })
 
 // Github needs the GITHUB_CLIENT_ID AND GITHUB_CLIENT_SECRET
 // environment variables.
-OAuth.setupStrategy({
-  provider: 'github',
-  strategy: require('passport-github2').Strategy,
-  config: {
-    clientID: env.GITHUB_CLIENT_ID,
-    clientSecret: env.GITHUB_CLIENT_SECRET,
-    callbackURL: `${app.baseUrl}/api/auth/login/github`,
-  },
-  passport
-})
+// OAuth.setupStrategy({
+//   provider: 'github',
+//   strategy: require('passport-github2').Strategy,
+//   config: {
+//     clientID: env.GITHUB_CLIENT_ID,
+//     clientSecret: env.GITHUB_CLIENT_SECRET,
+//     callbackURL: `${app.baseUrl}/api/auth/login/github`,
+//   },
+//   passport
+// })
 
 // Other passport configuration:
 // Passport review in the Week 6 Concept Review:
@@ -125,17 +125,17 @@ auth.get('/whoami', (req, res) => res.send(req.user))
 // POST requests for local login:
 auth.post('/login/local', passport.authenticate('local', {successRedirect: '/'}))
 
-// GET requests for OAuth login:
-// Register this route as a callback URL with OAuth provider
-auth.get('/login/:strategy', (req, res, next) =>
-  passport.authenticate(req.params.strategy, {
-    scope: 'email', // You may want to ask for additional OAuth scopes. These are
-                    // provider specific, and let you access additional data (like
-                    // their friends or email), or perform actions on their behalf.
-    successRedirect: '/',
-    // Specify other config here
-  })(req, res, next)
-)
+// // GET requests for OAuth login:
+// // Register this route as a callback URL with OAuth provider
+// auth.get('/login/:strategy', (req, res, next) =>
+//   passport.authenticate(req.params.strategy, {
+//     scope: 'email', // You may want to ask for additional OAuth scopes. These are
+//                     // provider specific, and let you access additional data (like
+//                     // their friends or email), or perform actions on their behalf.
+//     successRedirect: '/',
+//     // Specify other config here
+//   })(req, res, next)
+// )
 
 auth.post('/logout', (req, res) => {
   req.logout()

@@ -2,23 +2,52 @@
 
 // bcrypt docs: https://www.npmjs.com/package/bcrypt
 const bcrypt = require('bcryptjs')
-    , {STRING, VIRTUAL} = require('sequelize')
+    , {STRING, VIRTUAL, BOOLEAN, ARRAY, INTEGER, ENUM, DATE, NOW} = require('sequelize')
 
 module.exports = db => db.define('users', {
-  name: STRING,
+  name: {
+    type: STRING,
+    validate: {
+      notEmpty: true
+    }
+  },
   email: {
     type: STRING,
     validate: {
       isEmail: true,
-      notEmpty: true,
+      notEmpty: true
     }
   },
-
-  // We support oauth, so users may or may not have passwords.
+  is_vetted: BOOLEAN,
+  vetted_via: ENUM('auto', 'manual'),
+  vetted_date: {
+    type: DATE,
+    defaultValue: NOW
+  },
+  questions_answered: {
+    type: INTEGER,
+    defaultValue: 0
+  },
+  helpful_votes: {
+    type: INTEGER,
+    defaultValue: 0
+  },
+  abuse_flags: {
+    type: INTEGER,
+    defaultValue: 0
+  },
   password_digest: STRING, // This column stores the hashed password in the DB, via the beforeCreate/beforeUpdate hooks
   password: VIRTUAL // Note that this is a virtual, and not actually stored in DB
 }, {
-  indexes: [{fields: ['email'], unique: true}],
+  getterMethods: {
+    domain() {
+      return this.email.split('@')[1]
+    },
+    is_authorized_to_post() {
+      return this.is_vetted && (this.abuse_flags < 2 || this.abuse_flags < this.helpful_votes/50)
+    }
+  },
+  // indexes: [{fields: ['email'], unique: true}],
   hooks: {
     beforeCreate: setEmailAndPassword,
     beforeUpdate: setEmailAndPassword,
@@ -34,9 +63,10 @@ module.exports = db => db.define('users', {
   }
 })
 
-module.exports.associations = (User, {OAuth, Thing, Favorite}) => {
+module.exports.associations = (User, {OAuth, State}) => {
   User.hasOne(OAuth)
-  User.belongsToMany(Thing, {as: 'favorites', through: Favorite})
+  User.belongsTo(State)
+  // User.belongsToMany(Thing, {as: 'favrites', through: Fave})
 }
 
 function setEmailAndPassword(user) {
