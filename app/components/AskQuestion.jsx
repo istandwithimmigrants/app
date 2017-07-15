@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import {Link} from 'react-router'
 
 import MenuItem from 'material-ui/MenuItem'
 import TextField from 'material-ui/TextField'
@@ -11,7 +12,9 @@ const questions = [{id: 0, text: 'How do I get a green card?'}, {id: 1, text: 'W
 
 class AskQuestion extends Component {
   state = {
-    show: false
+    show: false,
+    question1: '',
+    question2: ''
   }
   render() {
     const language = this.props.language
@@ -24,6 +27,7 @@ class AskQuestion extends Component {
           multiLine={true}
           rows={4}
           rowsMax={4}
+          onChange={e => this.setState({ question1: e.target.value })}
         />
         <br />
         <RaisedButton icon={<Help />} primary={true} onTouchTap={() => this.setState({ show: true })} />
@@ -31,7 +35,7 @@ class AskQuestion extends Component {
           <div>
             <List>
               {questions.map(question =>
-              <ListItem key={question.id} primaryText={question.text} />
+              <ListItem key={question.id} primaryText={question.text} containerElement={<Link to={`/questions/${question.id}`} />}/>
               )}
             </List>
             <TextField
@@ -39,6 +43,7 @@ class AskQuestion extends Component {
               multiLine={true}
               rows={4}
               rowsMax={4}
+              onChange={e => this.setState({ question2: e.target.value })}
             />
             <br />
             <RaisedButton icon={<Help />} primary={true} />

@@ -8,15 +8,15 @@ export default class Lawyer extends Component {
       <div>
         <Tabs>
           <Tab label="All Your Questions" >
-            <LawyerQuestions />
+            <LawyerQuestions category='all' />
           </Tab>
           <Tab label="Unanswered Questions" >
-            <LawyerQuestions />
+            <LawyerQuestions category='unanswered' />
           </Tab>
           <Tab
             label="Questions with Follow-ups"
           >
-            <LawyerQuestions />
+            <LawyerQuestions category='followup' />
           </Tab>
         </Tabs>
       </div>
