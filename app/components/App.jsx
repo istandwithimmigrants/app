@@ -7,14 +7,19 @@ import TextField from 'material-ui/TextField'
 import AppBar from 'material-ui/AppBar'
 import FlatButton from 'material-ui/FlatButton'
 
-const App = ({children}) => (
+const App = ({children, language}) => {
+  const questionNum = language === 'en' ? 'Question Number' : 'Numero de Pregunta'
+  return (
   <div>
     <AppBar
       iconElementRight={<Login />}
-      iconElementLeft={<TextField style={{backgroundColor: 'white', width: 140}} hintText=" Question Number" />}
+      iconElementLeft={<TextField style={{backgroundColor: 'white', width: 150}} hintText={questionNum} />}
       />
     {children}
   </div>
-)
+  )
+}
 
-export default App
+const mapState = ({language}) => ({language})
+
+export default connect(mapState, null)(App)
