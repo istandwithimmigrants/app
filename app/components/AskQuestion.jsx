@@ -11,7 +11,7 @@ import FlatButton from 'material-ui/FlatButton'
 import Help from 'material-ui/svg-icons/action/help'
 import Dialog from 'material-ui/Dialog'
 
-const questions = [{id: 0, text: 'How do I get a green card?'}, {id: 1, text: 'What if I have a criminal record?'}]
+const questions = [{id: 0, text: 'How do I get a green card?'}, {id: 1, text: 'What are my rights if I have a green card?'}]
 
 class AskQuestion extends Component {
   state = {
@@ -28,7 +28,7 @@ class AskQuestion extends Component {
   handleClose = () => this.setState({ dialog: false })
   render() {
     const actions = [
-      <Link to='questions/0' >
+      <Link to='questions/1234' >
         <FlatButton
           label="OK"
           primary={true}

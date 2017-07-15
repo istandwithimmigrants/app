@@ -29,8 +29,8 @@ export default class QuestionPage extends Component {
     return (
       <div>
         <List>
-          <ListItem primaryText="This is a question" leftIcon={<Help />} />
-          <ListItem secondaryText="This is an answer answer answer answer answer answer answer answer answer answer answer answer answer answer answer answer answer answer" secondaryTextLines={2}leftIcon={<Info />} />
+          <ListItem primaryText="How do I get a green card?" leftIcon={<Help />} />
+          <ListItem secondaryText="This is the lawyer's answer" secondaryTextLines={2}leftIcon={<Info />} />
         </List>
         <Badge
           badgeContent={10}
