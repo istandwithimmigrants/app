@@ -14,7 +14,9 @@ module.exports = require('express').Router()
   .post('/',
     (req, res, next) =>
       Question.create(req.body)
-      .then(question => res.status(201).json(question))
+      .then(question => {
+        res.status(201).json(question)
+      })
       .catch(next))
   .get('/:id',
     (req, res, next) =>
@@ -24,5 +26,8 @@ module.exports = require('express').Router()
           where: {question_id: req.params.id}
         }]
       })
-      .then(question => res.json(question))
+      .then(question => {
+        console.log('hit route', question)
+        res.json(question)
+      })
       .catch(next))

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import MenuItem from 'material-ui/MenuItem'
 import TextField from 'material-ui/TextField'
 import Drawer from 'material-ui/Drawer'
@@ -13,6 +14,17 @@ import IconButton from 'material-ui/IconButton'
 import Badge from 'material-ui/Badge'
 
 export default class QuestionPage extends Component {
+  state = {
+    question: {}
+  }
+  componentDidMount() {
+    axios.get('/api/questions/1234')
+    .then(res => {
+      this.setState({ question: res.data })
+      console.log(res.data)
+    })
+    .catch(err => console.error(err))
+  }
   render() {
     return (
       <div>

@@ -34,7 +34,7 @@ render(
           <IndexRoute component={Main} />
           <Route path='lawyer' component={Lawyer} />
           <Route path='ask' component={AskQuestion} />
-          <Route path='question' component={QuestionPage} />
+          <Route path='questions/1234' component={QuestionPage} />
         </Route>
       </Router>
     </Provider>
