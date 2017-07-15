@@ -8,31 +8,31 @@ module.exports = db => db.define('users', {
   name: {
     type: STRING,
     validate: {
-      notEmpty: true,
+      notEmpty: true
     }
   },
   email: {
     type: STRING,
     validate: {
       isEmail: true,
-      notEmpty: true,
+      notEmpty: true
     }
   },
-  isVetted: BOOLEAN,
-  vettedVia: ENUM('auto', 'manual'),
-  vettedDate: {
+  is_vetted: BOOLEAN,
+  vetted_via: ENUM('auto', 'manual'),
+  vetted_date: {
     type: DATE,
     defaultValue: NOW
   },
-  questionsAnswered: {
+  questions_answered: {
     type: INTEGER,
     defaultValue: 0
   },
-  helpfulVotes: {
+  helpful_votes: {
     type: INTEGER,
     defaultValue: 0
   },
-  abuseFlags: {
+  abuse_flags: {
     type: INTEGER,
     defaultValue: 0
   },
@@ -43,11 +43,11 @@ module.exports = db => db.define('users', {
     domain() {
       return this.email.split('@')[1]
     },
-    isElgibleToAnswer() {
-      return this.isVetted && (this.abuseFlags < 2 || this.abuseFlags < this.helpfulVotes/50)
+    is_authorized_to_post() {
+      return this.is_vetted && (this.abuse_flags < 2 || this.abuse_flags < this.helpful_votes/50)
     }
   },
-  indexes: [{fields: ['email'], unique: true}],
+  // indexes: [{fields: ['email'], unique: true}],
   hooks: {
     beforeCreate: setEmailAndPassword,
     beforeUpdate: setEmailAndPassword,
@@ -63,9 +63,10 @@ module.exports = db => db.define('users', {
   }
 })
 
-module.exports.associations = (User, {OAuth}) => {
+module.exports.associations = (User, {OAuth, State}) => {
   User.hasOne(OAuth)
-  // User.belongsToMany(Thing, {as: 'favorites', through: Favorite})
+  User.belongsTo(State)
+  // User.belongsToMany(Thing, {as: 'favrites', through: Fave})
 }
 
 function setEmailAndPassword(user) {

@@ -15,31 +15,23 @@ const app = require('APP')
     , metaModels = {
       OAuth: require('./oauth'),
       User: require('./user'),
-      Thing: require('./thing'),
-      Favorite: require('./favorite'),
-      // ---------- Add new models here ----------
+      State: require('./state'),
+      Question: require('./question'),
+      Response: require('./response'),
+      Subscription: require('./subscription')
     }
     , {mapValues} = require('lodash')
 
 module.exports = db => {
-  // Create actual model classes by calling each meta model with the
-  // database.
   const models = mapValues(metaModels, defineModel => defineModel(db))
 
   /*
-  At this point, all our models have been created. We just need to
-  create the associations between them.
-
-  We pass the responsibility for this onto the models themselves:
+  We pass the responsibility for associations onto the models themselves:
   If they export an `associations` method, we'll call it, passing
   in all the models that have been defined.
 
-  This lets us move the association logic to the model files,
-  so all the knowledge about the structure of each model remains
-  self-contained.
-
-  The Sequelize docs suggest a similar setup:
-
+  This moves the association logic to the model files. The Sequelize docs
+  suggest a similar setup:
   https://github.com/sequelize/express-example#sequelize-setup
   */
   Object.keys(metaModels)
@@ -48,11 +40,9 @@ module.exports = db => {
       if (typeof associations === 'function') {
         debug('associating model %s', name)
         // Metamodel::associations(self: Model, others: {[name: String]: Model}) -> ()
-        //
         // Associate self with others.
         associations.call(metaModels[name], models[name], models)
       }
     })
-
   return models
 }
