@@ -26,14 +26,19 @@ export default class App extends Component {
   }
 
   render() {
+    const questionNum = this.props.language === 'en' ? 'Question Number' : 'Numero de Pregunta'
     return (
       <div>
         <AppBar
           iconElementRight={<Login />}
-          iconElementLeft={<div><TextField style={{ backgroundColor: 'white', width: 140 }} hintText=" Question Number" onChange={this.handleChange}/><Link to={`/question/${this.state.qNum}`}><RaisedButton label="Take me to my question" style={style}/></Link></div>}
+          iconElementLeft={<div><TextField style={{ backgroundColor: 'white', width: 150 }} hintText={questionNum} onChange={this.handleChange}/><Link to={`/question/${this.state.qNum}`}><RaisedButton label="Take me to my question" style={style}/></Link></div>}
         />
         {this.props.children}
       </div>
     )
   }
 }
+
+const mapState = ({language}) => ({language})
+
+export default connect(mapState, null)(App)
