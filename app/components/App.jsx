@@ -30,7 +30,7 @@ export default class App extends Component {
       <div>
         <AppBar
           iconElementRight={<Login />}
-          iconElementLeft={<div><TextField style={{ backgroundColor: 'white', width: 140 }} hintText=" Question Number" onChange={this.handleChange}/><Link to={`/question${this.state.qNum}`}><RaisedButton label="Take me to my question" style={style}/></Link></div>}
+          iconElementLeft={<div><TextField style={{ backgroundColor: 'white', width: 140 }} hintText=" Question Number" onChange={this.handleChange}/><Link to={`/question/${this.state.qNum}`}><RaisedButton label="Take me to my question" style={style}/></Link></div>}
         />
         {this.props.children}
       </div>
