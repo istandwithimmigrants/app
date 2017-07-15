@@ -24,6 +24,7 @@ import NotFound from './components/NotFound'
 import App from './components/App'
 import Lawyer from './components/Lawyer'
 import AskQuestion from './components/AskQuestion'
+import QuestionPage from './components/QuestionPage'
 
 render(
   <MuiThemeProvider>
@@ -33,6 +34,7 @@ render(
           <IndexRoute component={Main} />
           <Route path='lawyer' component={Lawyer} />
           <Route path='ask' component={AskQuestion} />
+          <Route path='question' component={QuestionPage} />
         </Route>
       </Router>
     </Provider>
