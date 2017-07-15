@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import {Link} from 'react-router'
 
 import {
   Table,
@@ -10,7 +11,10 @@ import {
   TableRowColumn,
 } from 'material-ui/Table'
 
-const LawyerQuestions = () => (
+const questions = [{type: 'unanswered', text: 'How do I get a green card', id: 0, date: 'Jan 1'}]
+
+const LawyerQuestions = (props) => {
+  return (
   <div>
     <Table>
       <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
@@ -20,13 +24,20 @@ const LawyerQuestions = () => (
         </TableRow>
       </TableHeader>
       <TableBody displayRowCheckbox={false}>
-        <TableRow>
-          <TableRowColumn>Jan. 1</TableRowColumn>
-          <TableRowColumn>How do I get a green card?</TableRowColumn>
+      {questions.filter(question => question.type === props.category).map(question =>
+        <TableRow key={question.id} >
+          <TableRowColumn>{question.date}</TableRowColumn>
+          <TableRowColumn>
+            <Link to={`/questions/${question.id}`}>
+              {question.text}
+            </Link>
+          </TableRowColumn>
         </TableRow>
+      )}
       </TableBody>
     </Table>
   </div>
-)
+  )
+}
 
 export default LawyerQuestions

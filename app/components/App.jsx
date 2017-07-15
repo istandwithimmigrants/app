@@ -7,13 +7,14 @@ import Login from './Login'
 
 import TextField from 'material-ui/TextField'
 import AppBar from 'material-ui/AppBar'
-import FlatButton from 'material-ui/FlatButton'
+import IconButton from 'material-ui/IconButton'
+import Search from 'material-ui/svg-icons/action/search'
 
 const style = {
   margin: 12
 }
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -31,7 +32,18 @@ export default class App extends Component {
       <div>
         <AppBar
           iconElementRight={<Login />}
-          iconElementLeft={<div><TextField style={{ backgroundColor: 'white', width: 150 }} hintText={questionNum} onChange={this.handleChange}/><Link to={`/question/${this.state.qNum}`}><RaisedButton label="Take me to my question" style={style}/></Link></div>}
+          iconElementLeft={
+            <div>
+              <TextField style={{ backgroundColor: 'white', width: 150 }}
+              hintText={questionNum}
+              onChange={this.handleChange}/>
+              <Link to={`/question/${this.state.qNum}`}>
+                <IconButton iconStyle={{fill: '#FFFFFF'}} >
+                  <Search />
+                </IconButton>
+              </Link>
+              </div>
+            }
         />
         {this.props.children}
       </div>
