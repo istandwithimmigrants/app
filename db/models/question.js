@@ -8,8 +8,11 @@ module.exports = db => db.define('questions', {
   },
   question_text: {
     type: STRING(1200),
-    len: [20, 1200]
+    len: [10, 1200]
   },
+  // Todo: normalized list of languages, w English & source name
+  source_language: STRING,
+  english_text: STRING(1500),
   tags: {
     type: ARRAY(STRING)
   },
